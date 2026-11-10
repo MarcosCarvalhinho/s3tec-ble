@@ -9,19 +9,24 @@
 </head>
 <body><main class="panel">
 <div class="eyebrow">LABORATÓRIO IOT</div><div class="brand">S3 <span style="color:#45c4e8">TEC</span></div>
-<h1>Controle BLE · POC-02</h1><p>Controle o LED do ESP32 diretamente pelo Bluetooth, sem Wi-Fi no dispositivo.</p>
+<h1>Controle BLE · POC-04</h1><p>Controle o LED do ESP32 diretamente pelo Bluetooth, sem Wi-Fi no dispositivo.</p>
 <div class="device"><div id="dot" class="dot"></div><div><strong id="dev">S3TEC-ESP32</strong><span id="state">Desconectado</span></div></div>
+<p id="device-id" style="margin:0 0 8px;color:#65d5ef;font-weight:700">Dispositivo: S3-ESP-001</p>
 <button class="button connect" id="connect">ᛒ Conectar ao ESP32</button>
 <div class="actions"><button class="button onbtn" id="on" disabled>💡 LIGAR</button><button class="button offbtn" id="off" disabled>◯ DESLIGAR</button></div>
 <button class="disconnect" id="disconnect" disabled>Desconectar</button>
 <div class="small" id="log" role="status" aria-live="polite">Pronto para conectar.</div>
-<div id="warning" class="warning" hidden></div><div class="footer">S3 TEC · Protótipo local, sem autenticação</div>
+<div id="warning" class="warning" hidden></div><div class="footer">S3 TEC · Protótipo sem autenticação. O QR identifica a página, não valida a identidade física do ESP32.</div>
 </main>
 <script>
 'use strict';
 const SERVICE='4fafc201-1fb5-459e-8fcc-c5c9c331914b';
 const CHARACTERISTIC='beb5483e-36e1-4688-b7f5-ea07361b26a8';
 const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+const deviceId=params.get('id')||'S3-ESP-001';
+const allowedId=/^S3-ESP-[0-9]{3,6}$/.test(deviceId)?deviceId:'S3-ESP-001';
+$('device-id').textContent='Dispositivo: '+allowedId;
 let device=null, characteristic=null, busy=false;
 function log(t){$('log').textContent=t}
 function refresh(){const connected=!!(characteristic&&device?.gatt?.connected);$('dot').classList.toggle('on',connected);$('state').textContent=connected?'Conectado via Bluetooth':'Desconectado';$('on').disabled=!connected||busy;$('off').disabled=!connected||busy;$('connect').disabled=connected||busy;$('disconnect').disabled=!connected||busy}
