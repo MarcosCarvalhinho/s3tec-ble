@@ -1,52 +1,51 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07172d"><title>S3 TEC | Controle BLE</title>
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>S3 TEC | Controle BLE 4 Relés</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100dvh;background:radial-gradient(circle at 75% 0%,#123a62 0,#07172d 49%,#040e1e 100%);color:#f4fbff;display:grid;place-items:center;padding:20px}.panel{width:min(100%,420px);border:1px solid #284a68;border-radius:26px;padding:28px 23px;background:#0b2239e8;box-shadow:0 24px 64px #0007}.eyebrow{font-size:12px;color:#59c9e8;letter-spacing:2px;font-weight:800}.brand{font-size:27px;font-weight:850;letter-spacing:1px;margin-top:6px}h1{font-size:20px;margin:22px 0 4px}p{color:#a9c0d2;font-size:14px;line-height:1.5;margin:4px 0 20px}.device{display:flex;gap:12px;align-items:center;background:#102e48;border-radius:16px;padding:15px;margin:17px 0}.dot{height:13px;width:13px;border-radius:100%;background:#f2ab4a;box-shadow:0 0 0 5px #f2ab4a25}.dot.on{background:#4be3a0;box-shadow:0 0 0 5px #4be3a025}.device strong{display:block;font-size:15px}.device span{display:block;font-size:12px;color:#a9c0d2;margin-top:3px}.button{border:0;border-radius:14px;min-height:56px;font-size:16px;font-weight:760;cursor:pointer;width:100%;touch-action:manipulation}.connect{background:#28b9df;color:#062438;margin:8px 0 15px}.connect:disabled{background:#477086;color:#cbdde7;cursor:not-allowed}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.onbtn{background:#1bba7e;color:#052d1f}.offbtn{background:#ef6273;color:#3b0911}.actions button:disabled{opacity:.4;cursor:not-allowed}.small{margin-top:20px;border-top:1px solid #274661;padding-top:14px;font-size:12px;color:#acc2d2;line-height:1.5;min-height:52px}.footer{margin-top:20px;color:#6998b4;font-size:11px;text-align:center}.disconnect{border:1px solid #56718a;background:transparent;color:#bcd6e9;font-size:13px;padding:10px 14px;border-radius:10px;margin-top:15px;width:100%;cursor:pointer}.disconnect:disabled{opacity:.35}.warning{color:#ffce88;font-size:13px;line-height:1.45;margin-top:12px}
-</style>
-</head>
-<body><main class="panel">
-<div class="eyebrow">LABORATÓRIO IOT</div><div class="brand">S3 <span style="color:#45c4e8">TEC</span></div>
-<h1>Controle BLE · POC-04</h1><p>Controle o LED do ESP32 diretamente pelo Bluetooth, sem Wi-Fi no dispositivo.</p>
-<div class="device"><div id="dot" class="dot"></div><div><strong id="dev">S3TEC-ESP32</strong><span id="state">Desconectado</span></div></div>
-<p id="device-id" style="margin:0 0 8px;color:#65d5ef;font-weight:700">Dispositivo: S3-ESP-001</p>
-<button class="button connect" id="connect">ᛒ Conectar ao ESP32</button>
-<div class="actions"><button class="button onbtn" id="on" disabled>💡 LIGAR</button><button class="button offbtn" id="off" disabled>◯ DESLIGAR</button></div>
-<button class="disconnect" id="disconnect" disabled>Desconectar</button>
-<div class="small" id="log" role="status" aria-live="polite">Pronto para conectar.</div>
-<div id="warning" class="warning" hidden></div><div class="footer">S3 TEC · Protótipo sem autenticação. O QR identifica a página, não valida a identidade física do ESP32.</div>
-</main>
+:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#e9f4ff;background:#09182a}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(155deg,#081525,#11365b)}main{max-width:620px;margin:auto;padding:28px 18px 42px}.brand{font-size:13px;letter-spacing:2px;font-weight:800;color:#65d6ff}h1{margin:8px 0;font-size:29px}p{color:#bed0e0;line-height:1.5}section{border:1px solid #365b77;background:#12304bba;border-radius:18px;padding:18px;margin:20px 0}.meta{font-size:14px;color:#a9ccdc}.status{display:inline-block;padding:7px 12px;background:#304359;border-radius:100px;font-size:13px}.status.ok{background:#135843;color:#b2f9d5}button{font:inherit;cursor:pointer;border:none;border-radius:12px;padding:14px 15px;font-weight:700;background:#21b8eb;color:#052239}button:disabled{opacity:.43;cursor:not-allowed}.connect{width:100%;margin:14px 0 8px}.channels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.channel{background:#10283f;border:1px solid #31506b;border-radius:15px;padding:14px}.channel h2{font-size:17px;margin:0 0 9px}.state{font-size:12px;color:#a2b8cb;margin-bottom:12px}.pair{display:flex;gap:7px}.pair button{flex:1;min-width:0;padding:12px 6px}.off{background:#324e67;color:#f1f7ff}.alloff{background:#e4ac48;color:#23210d;width:100%;margin-top:14px}.small{font-size:12px;color:#b9cbdc}#log{white-space:pre-wrap;word-break:break-word;font-size:12px;color:#a8dbee;max-height:140px;overflow:auto}@media(max-width:370px){.channels{grid-template-columns:1fr}}
+</style></head><body><main><div class="brand">S3 TEC · LABORATÓRIO IOT</div><h1>Controle BLE · 4 relés</h1><p>POC experimental, sem autenticação. Não conecte cargas aos contatos dos relés.</p><section><div class="meta">Dispositivo: <strong id="device">S3-ESP-001</strong></div><p><span class="status" id="status">Desconectado</span></p><button class="connect" id="connect">Conectar ao ESP32</button><div class="small">Chrome no Android ou Chrome/Edge no PC com Bluetooth BLE. Conexão direta: o ESP32 não usa internet.</div></section><section><div class="channels" id="channels"></div><button class="alloff" id="alloff" disabled>Desligar todos</button></section><section><strong>Registro de comandos</strong><pre id="log">Pronto para conectar.</pre></section></main>
 <script>
 'use strict';
 const SERVICE='4fafc201-1fb5-459e-8fcc-c5c9c331914b';
 const CHARACTERISTIC='beb5483e-36e1-4688-b7f5-ea07361b26a8';
-const $=id=>document.getElementById(id);
-const params=new URLSearchParams(location.search);
-const deviceId=params.get('id')||'S3-ESP-001';
-const allowedId=/^S3-ESP-[0-9]{3,6}$/.test(deviceId)?deviceId:'S3-ESP-001';
-$('device-id').textContent='Dispositivo: '+allowedId;
-let device=null, characteristic=null, busy=false;
-function log(t){$('log').textContent=t}
-function refresh(){const connected=!!(characteristic&&device?.gatt?.connected);$('dot').classList.toggle('on',connected);$('state').textContent=connected?'Conectado via Bluetooth':'Desconectado';$('on').disabled=!connected||busy;$('off').disabled=!connected||busy;$('connect').disabled=connected||busy;$('disconnect').disabled=!connected||busy}
-function gone(){characteristic=null;log('Bluetooth desconectado. Você pode conectar novamente.');refresh()}
-async function connect(){
- if(!navigator.bluetooth){log('Web Bluetooth não disponível nesta página. Abra no Chrome Android por HTTPS ou em localhost.');return}
- busy=true;refresh();log('Escolha S3TEC-ESP32 na lista de dispositivos…');
- try {
-   device=await navigator.bluetooth.requestDevice({filters:[{name:'S3TEC-ESP32'}],optionalServices:[SERVICE]});
-   device.addEventListener('gattserverdisconnected',gone);
-   const server=await device.gatt.connect();
-   const service=await server.getPrimaryService(SERVICE);
-   characteristic=await service.getCharacteristic(CHARACTERISTIC);
-   $('dev').textContent=device.name||'S3TEC-ESP32';log('Conectado! Use LIGAR ou DESLIGAR.');
- }catch(err){characteristic=null;log('Não conectou: '+(err?.message||String(err)))}
- finally {busy=false;refresh()}
+const name=document.getElementById('device'), status=document.getElementById('status'), log=document.getElementById('log');
+const connect=document.getElementById('connect'), alloff=document.getElementById('alloff'), channels=document.getElementById('channels');
+const params=new URLSearchParams(location.search);name.textContent=params.get('device')||'S3-ESP-001';
+let bleDevice=null, characteristic=null, busy=false;
+const buttonList=[];
+function message(txt){log.textContent=(new Date().toLocaleTimeString('pt-BR')+'  '+txt+'\n'+log.textContent).slice(0,2400)}
+function connected(yes){status.textContent=yes?'Conectado':'Desconectado';status.classList.toggle('ok',yes);alloff.disabled=!yes;buttonList.forEach(b=>b.disabled=!yes);connect.textContent=yes?'Reconectar ao ESP32':'Conectar ao ESP32'}
+for(let n=1;n<=4;n++){
+ const card=document.createElement('div');card.className='channel';
+ const h=document.createElement('h2');h.textContent='Relé '+n;
+ const st=document.createElement('div');st.className='state';st.textContent='Estado não consultado';
+ const pair=document.createElement('div');pair.className='pair';
+ for(const [label,suffix,cls] of [['LIGAR','ON',''],['DESLIGAR','OFF','off']]){
+   const b=document.createElement('button');b.textContent=label;b.className=cls;b.disabled=true;
+   b.addEventListener('click',async()=>{if(await send(`R${n}_${suffix}`)){st.textContent= suffix==='ON'?'Último comando: LIGAR':'Último comando: DESLIGAR'}});
+   buttonList.push(b);pair.appendChild(b);
+ }
+ card.append(h,st,pair);channels.appendChild(card);
 }
-async function send(value){if(!characteristic||busy)return;busy=true;refresh();try{await characteristic.writeValue(new TextEncoder().encode(value));log(value==='1'?'Comando LIGAR enviado (1).':'Comando DESLIGAR enviado (0).')}catch(err){log('Falha ao enviar: '+(err?.message||String(err)))}finally{busy=false;refresh()}}
-$('connect').addEventListener('click',connect);$('on').addEventListener('click',()=>send('1'));$('off').addEventListener('click',()=>send('0'));$('disconnect').addEventListener('click',()=>{device?.gatt?.disconnect();gone()});
-if(!navigator.bluetooth){$('warning').hidden=false;$('warning').textContent='Este navegador ou endereço não permite Web Bluetooth. Em Android, experimente Chrome com uma página HTTPS; no computador, Chrome em localhost.'}
-else if(!window.isSecureContext){$('warning').hidden=false;$('warning').textContent='Para Web Bluetooth, abra esta página em uma origem segura (HTTPS ou localhost).'}
-refresh();
+async function send(cmd){
+ if(!characteristic||busy)return false;
+ busy=true;buttonList.forEach(b=>b.disabled=true);alloff.disabled=true;
+ try{await characteristic.writeValueWithResponse(new TextEncoder().encode(cmd));message('Enviado: '+cmd);return true}
+ catch(e){message('Erro ao enviar: '+e.message);return false}
+ finally{busy=false;connected(!!characteristic&&!!bleDevice?.gatt?.connected)}
+}
+connect.addEventListener('click',async()=>{
+ if(!navigator.bluetooth){message('Web Bluetooth indisponível neste navegador ou origem. Use HTTPS ou localhost.');return}
+ try{
+  message('Procurando S3TEC-ESP32...');
+  const device=await navigator.bluetooth.requestDevice({filters:[{name:'S3TEC-ESP32'}],optionalServices:[SERVICE]});
+  if(bleDevice)bleDevice.removeEventListener('gattserverdisconnected',onDisconnect);
+  bleDevice=device;device.addEventListener('gattserverdisconnected',onDisconnect);
+  const gatt=await device.gatt.connect();
+  const service=await gatt.getPrimaryService(SERVICE);
+  characteristic=await service.getCharacteristic(CHARACTERISTIC);
+  connected(true);message('BLE conectado ao '+device.name);
+ }catch(e){characteristic=null;connected(false);message('Falha na conexão: '+e.message)}
+});
+function onDisconnect(){characteristic=null;connected(false);message('BLE desconectado')}
+alloff.addEventListener('click',async()=>{if(await send('ALL_OFF'))document.querySelectorAll('.state').forEach(s=>s.textContent='Último comando: DESLIGAR')});
 </script></body></html>
